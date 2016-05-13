@@ -23,12 +23,8 @@
  */
 package org.finra.alpha.numeric;
 
-import javax.ejb.embeddable.EJBContainer;
-import javax.naming.NamingException;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.core.IsEqual.equalTo;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -38,7 +34,7 @@ import static org.junit.Assert.*;
  */
 public class SpellBeanTest {
 
-    private SpellBean instance = new SpellBean();;
+    private final SpellBean instance = new SpellBean();;
 
     /**
      * Test of conbinationCount method, of class SpellBean.
@@ -46,17 +42,15 @@ public class SpellBeanTest {
     @Test
     public void testConbinationCount7() {
         int[] digits = {0, 0, 0, 0, 0, 0, 0};
-        int expResult = 1;
         int result = instance.conbinationCount(digits);
-        assertEquals(expResult, result);
+        assertThat(result, is(1));
     }
     
     @Test
     public void testConbinationCount10() {
         int[] digits = {0, 0, 0, 0, 0, 0, 0, 0, 0, 2};
-        int expResult = 4;
         int result = instance.conbinationCount(digits);
-        assertEquals(expResult, result);
+        assertThat(result, is(equalTo(4)));
     }
     
     @Test(expected = IllegalArgumentException.class)
