@@ -21,37 +21,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.finra.alpha.numeric;
+package org.finra.alphaNumeric;
 
-import java.util.Arrays;
-import javax.ejb.Singleton;
+import org.finra.alphaNumeric.SpellBean;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.core.IsEqual.equalTo;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  *
  * @author gax
  */
-@Singleton
-public class SpellBean {
+public class SpellBeanTest {
 
-  private static final char[][] KEYPADE = {
-      {'0'}, 
-      {'1'},
-      {'2','A','B','C'},
-      {'3','D','E','F'},
-      {'4','G','H','I'},
-      {'5','J','K','L'},
-      {'6','M','N','O'},
-      {'7','P','Q','R','S'},
-      {'8','T','U','V'},
-      {'9','W','X','Y','Z'}
-  };
-  
-  public int conbinationCount(int[] digits) {
-      if (digits == null || (digits.length != 7 && digits.length != 10)) {
-          throw new IllegalArgumentException("invalid length");
-      }
-      return Arrays.stream(digits)
-              .map(d -> KEYPADE[d].length)
-              .reduce(1, Math::multiplyExact);
-  }
+    private final SpellBean instance = new SpellBean();;
+
+    /**
+     * Test of conbinationCount method, of class SpellBean.
+     */
+    @Test
+    public void testConbinationCount7() {
+        int[] digits = {0, 0, 0, 0, 0, 0, 0};
+        int result = instance.conbinationCount(digits);
+        assertThat(result, is(1));
+    }
+    
+    @Test
+    public void testConbinationCount10() {
+        int[] digits = {0, 0, 0, 0, 0, 0, 0, 0, 0, 2};
+        int result = instance.conbinationCount(digits);
+        assertThat(result, is(equalTo(4)));
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testConbinationCountBadLength() {
+        int[] digits = {0, 0, 0, 0};
+        instance.conbinationCount(digits);
+        fail("digit length was " + digits.length);
+    }
+
 }
