@@ -53,7 +53,7 @@ public class Symbol implements Iterable<String> {
     };
 
     private int[] base;
-    private int[] significence;
+    private int[] significance;
     private int symbolPosition;
     private int size; // size of the list.
 
@@ -68,17 +68,17 @@ public class Symbol implements Iterable<String> {
         }
 
         this.base = baseNumber;
-        this.significence = new int[baseNumber.length];
-        significence[baseNumber.length - 1] = 1;
+        this.significance = new int[baseNumber.length];
+        significance[baseNumber.length - 1] = 1;
         for (int i = baseNumber.length - 2; i >= 0; i--) {
-            significence[i] = significence[i + 1] * KEYPADE[base[i + 1]].length;
+            significance[i] = significance[i + 1] * KEYPADE[base[i + 1]].length;
         }
-        this.size = significence[0] * KEYPADE[base[0]].length;
+        this.size = significance[0] * KEYPADE[base[0]].length;
     }
 
     private Symbol(Symbol s) {
         this.base = s.base;
-        this.significence = s.significence;
+        this.significance = s.significance;
         this.size = s.size;
     }
 
@@ -135,8 +135,8 @@ public class Symbol implements Iterable<String> {
         char[] symbolChars = new char[base.length];
         int remainder = this.symbolPosition;
         for (int i = 0; i < base.length; i++) {
-            int mostSignificantDigit = remainder / this.significence[i];
-            remainder = remainder % this.significence[i];
+            int mostSignificantDigit = remainder / this.significance[i];
+            remainder = remainder % this.significance[i];
             symbolChars[i] = KEYPADE[this.base[i]][mostSignificantDigit];
         }
         return symbolChars;
