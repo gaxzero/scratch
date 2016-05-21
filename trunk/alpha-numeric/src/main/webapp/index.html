@@ -3,8 +3,41 @@
     <head>
         <title>Start Page</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript">
+            function go(direction) {
+                var form = document.forms[0];
+                form.offset.value = parseInt(form.offset.value) + direction * parseInt(form.limit.value);
+                var url = window.location.href + "symbol/" + form.base.value + "?offset="+ form.offset.value + "&limit=" + form.limit.value;
+                document.getElementById("result").src = url;
+                document.getElementById("url").href = url;
+                document.getElementById("url").innerHTML = url;
+            }
+        </script>
+        <style type="text/css">
+            form {
+                display: inline-table;
+            }
+        </style>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>Symbol List</h1>
+        <form onsubmit="go(0); return false;" target="result">
+            <fieldset>
+                <label for="base">Phone number : </label>
+                <input id="base" type="number" required maxlength="10" value="0000000000"/>
+                <button type="submit">List</button>
+            </fieldset>
+            <fieldset>
+                <label for="offset">Offset : </label>
+                <input id="offset" type="number" value="0" readonly="true" title="Start index"/>
+                <label for="limit">Limit : </label>
+                <input id="limit" type="number" required value="10" title="Page size"/>
+                <button onclick="go(-1)">&lt; Back</button>
+                <button onclick="go(+1)">Next &gt;</button>
+            </fieldset>
+        </form>
+        <br>
+        <a id="url" href="symbol/0000000000?offset=0&limit=10">link</a>
+        <iframe id="result" name="result" src="symbol/0000000000?offset=0&limit=10" style="width: 100%; height: 20em; " />
     </body>
 </html>
