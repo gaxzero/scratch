@@ -156,7 +156,7 @@ public class Ui_ESTest extends Ui_ESTest_scaffolding {
         when(in.readLine()).thenReturn("higher");
         Ui ui = new Ui(in, out);
         Ui.Choice choice = ui.read();
-        assertThat(choice, is(equalTo(Ui.Choice.higher)));
+        assertThat(choice.name(), is(equalTo(Ui.Choice.higher.name())));
     }
 
     @Test
